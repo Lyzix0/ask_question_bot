@@ -96,14 +96,15 @@ class Answer(BaseCog):
 
         answer_embed = nextcord.Embed(
             title="Ответ от ХАОС",
-            description=self.questions_data[question],
+            description=f"*{self.questions_data[question]}*",
             color=nextcord.Colour.blue(),
         )
 
         await public_channel.send(embed=question_embed)
         answer_message = await public_channel.send(embed=answer_embed)
 
-        await answer_message.add_reaction("✅")
+        emoji = nextcord.PartialEmoji(name="emodziorvoteyes", id=1103737252909162506)
+        await answer_message.add_reaction(emoji)
 
 
 def setup(bot):

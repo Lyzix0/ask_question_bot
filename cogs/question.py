@@ -17,7 +17,7 @@ class QuestionCog(BaseCog):
         form = nextcord.ui.Modal(title="Задайте ваш вопрос")
         form.add_item(
             nextcord.ui.TextInput(
-                label="Спросите то что вас интересует тут.",
+                label="Спросите то, что вас интересует",
                 placeholder="Ваш текст...",
             )
         )
@@ -38,6 +38,13 @@ class QuestionCog(BaseCog):
 
         answer_cog = self.bot.get_cog("Answer")
         view = answer_cog.create_question_view()
+
+        await interaction.send(
+            content="Вопрос успешно отправлен! Ответ будет опубликован тут <#1267777121066029089>.\n"
+            "*Ваш вопрос может быть пропущен, если он нарушал правила публикации или правила сервера.*",
+            delete_after=10,
+            ephemeral=True,
+        )
         await channel.send(embed=embed, view=view)
 
 
