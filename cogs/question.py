@@ -20,7 +20,7 @@ class QuestionCog(BaseCog):
         user_id = interaction.user.id
         current_time = time.time()
 
-        if user_id in self.cooldowns:
+        if user_id in self.cooldowns and user_id not in config.admins:
             last_used = self.cooldowns[user_id]
             cooldown_duration = 7200
 
