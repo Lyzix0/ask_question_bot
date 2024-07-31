@@ -1,3 +1,5 @@
+import time
+
 import nextcord
 
 import config
@@ -7,6 +9,7 @@ from cogs.base import BaseCog
 class QuestionCog(BaseCog):
     def __init__(self, bot):
         super().__init__(bot)
+        self.cooldowns = {}
 
     @nextcord.slash_command(
         name="вопрос",
@@ -14,6 +17,23 @@ class QuestionCog(BaseCog):
         guild_ids=[config.GUILD_ID],
     )
     async def question_command(self, interaction: nextcord.Interaction):
+        user_id = interaction.user.id
+        current_time = time.time()
+
+        if user_id in self.cooldowns:
+            last_used = self.cooldowns[user_id]
+            cooldown_duration = 7200
+
+            if current_time - last_used < cooldown_duration:
+                remaining_time = cooldown_duration - (current_time - last_used)
+                await interaction.response.send_message(
+                    f"Вы можете задать следующий вопрос через {remaining_time // 60:.0f} минут.",
+                    ephemeral=True,
+                )
+                return
+
+        self.cooldowns[user_id] = current_time
+
         form = nextcord.ui.Modal(title="Задайте ваш вопрос")
         form.add_item(
             nextcord.ui.TextInput(

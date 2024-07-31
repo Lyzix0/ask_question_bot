@@ -18,7 +18,7 @@ class Answer(BaseCog):
         skip_button = nextcord.ui.Button(label="Пропустить")
         skip_button.callback = self.skip_callback
 
-        view = nextcord.ui.View()
+        view = nextcord.ui.View(timeout=None)
         view.add_item(answer_button)
         view.add_item(skip_button)
         return view
