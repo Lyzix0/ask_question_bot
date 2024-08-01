@@ -13,7 +13,7 @@ class QuestionCog(BaseCog):
 
     @nextcord.slash_command(
         name="вопрос",
-        description="Задать анонимный вопрос",
+        description="Задать анонимный вопрос главе сервера",
         guild_ids=[config.GUILD_ID],
     )
     async def question_command(self, interaction: nextcord.Interaction):
